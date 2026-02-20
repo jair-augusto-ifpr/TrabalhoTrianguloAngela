@@ -8,9 +8,6 @@ body{
 h1 {
     color: #333;
 }
-form {
-    margin-top: 20px;
-}
 input[type="number"] {
     padding: 10px;
     margin: 5px;
