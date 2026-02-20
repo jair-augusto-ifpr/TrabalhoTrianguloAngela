@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Triângulo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>VerificaTriangulo</h1>
+
+  <p>Digite o tipo de triângulo esperado:</p>
+  <select id="tipoTriangulo">
+    <option value="equilatero">Equilátero</option>
+    <option value="isosceles">Isósceles</option>
+    <option value="escaleno">Escaleno</option>
+  </select>
+
+  <p>Digite os lados do triângulo:</p>
+  <input type="number" id="ladoA" placeholder="Lado A" />
+  <input type="number" id="ladoB" placeholder="Lado B" />
+  <input type="number" id="ladoC" placeholder="Lado C" />
+  
+  <button onclick="verificarTriangulo()">Verificar</button>
+
+  <p id="resultado"></p>
+
+  <script>
+    function verificarTriangulo() {
+      const ladoA = parseFloat(document.getElementById("ladoA").value);
+      const ladoB = parseFloat(document.getElementById("ladoB").value);
+      const ladoC = parseFloat(document.getElementById("ladoC").value);
+      const tipoSelecionado = document.getElementById("tipoTriangulo").value;
+      const resultado = document.getElementById("resultado");
+
+      resultado.textContent = "";
+
+      if (isNaN(ladoA) || isNaN(ladoB) || isNaN(ladoC)) {
+        resultado.textContent = "Medidas inválidas — insira valores numéricos.";
+        return;
+      }
+
+      if (ladoA <= 0 || ladoB <= 0 || ladoC <= 0) {
+        resultado.textContent = "Medidas inválidas — os lados devem ser positivos.";
+        return;
+      }
+
+      const existeTriangulo =
+        ladoA + ladoB > ladoC &&
+        ladoA + ladoC > ladoB &&
+        ladoB + ladoC > ladoA;
+
+      if (!existeTriangulo) {
+        resultado.textContent = "Medidas inválidas — não formam triângulo.";
+        return;
+      }
+      let tipoEncontrado = "";
+
+      if (ladoA === ladoB && ladoB === ladoC) {
+        tipoEncontrado = "equilatero";
+      } else if (ladoA === ladoB || ladoA === ladoC || ladoB === ladoC) {
+        tipoEncontrado = "isosceles";
+      } else {
+        tipoEncontrado = "escaleno";
+      }
+
+      if (tipoSelecionado === tipoEncontrado) {
+        resultado.textContent = `Medidas válidas para triângulo ${tipoEncontrado}.`;
+      } else {
+        resultado.textContent = `Medidas inválidas para triângulo ${tipoSelecionado}.`;
+      }
+    }
+  </script>
+</body>
+</html>
