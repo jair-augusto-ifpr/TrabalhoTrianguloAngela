@@ -8,69 +8,84 @@
 </head>
 
 <body>
-  <h1>VerificaTriangulo</h1>
+  <div class="app-wrap">
+  <header class="header">
+    <h1>VerificaTriangulo</h1>
+  </header>
 
-  <p>Digite o tipo de triângulo esperado:</p>
-  <select id="tipoTriangulo">
-    <option value="equilatero">Equilátero</option>
-    <option value="isosceles">Isósceles</option>
-    <option value="escaleno">Escaleno</option>
-  </select>
+  <main class="main">
+  <section class="card entrada-card">
+    <div class="opcao-entrada">
+      <label><input type="radio" name="entrada" value="lados" checked /> Lados</label>
+      <label><input type="radio" name="entrada" value="angulos" /> Ângulos</label>
+      <label><input type="radio" name="entrada" value="pontos" /> Pontos</label>
+    </div>
 
-  <p>Digite os lados do triângulo:</p>
-  <input type="number" id="ladoA" placeholder="Lado A" />
-  <input type="number" id="ladoB" placeholder="Lado B" />
-  <input type="number" id="ladoC" placeholder="Lado C" />
-  
-  <button onclick="verificarTriangulo()">Verificar</button>
+    <div id="bloco-lados" class="bloco-entrada">
+      <p>Digite os lados do triângulo:</p>
+      <div class="input-row">
+        <input type="number" id="ladoA" placeholder="Lado A" step="any" min="0" />
+        <input type="number" id="ladoB" placeholder="Lado B" step="any" min="0" />
+        <input type="number" id="ladoC" placeholder="Lado C" step="any" min="0" />
+      </div>
+    </div>
 
-  <p id="resultado"></p>
+    <div id="bloco-angulos" class="bloco-entrada" style="display: none;">
+    <p>Ângulos (em graus — preencha 2 para o 3º ser calculado):</p>
+    <input type="number" id="angA" placeholder="Ângulo A" step="any" min="0" max="180" />
+    <input type="number" id="angB" placeholder="Ângulo B" step="any" min="0" max="180" />
+    <input type="number" id="angC" placeholder="Ângulo C" step="any" min="0" max="180" />
+    <span id="terceiroAngulo"></span>
+    <div class="esboco-container">
+      <p>Esboço pelos ângulos:</p>
+      <canvas id="esboco" width="280" height="200"></canvas>
+    </div>
+    </div>
 
-  <script>
-    function verificarTriangulo() {
-      const ladoA = parseFloat(document.getElementById("ladoA").value);
-      const ladoB = parseFloat(document.getElementById("ladoB").value);
-      const ladoC = parseFloat(document.getElementById("ladoC").value);
-      const tipoSelecionado = document.getElementById("tipoTriangulo").value;
-      const resultado = document.getElementById("resultado");
+    <div id="bloco-pontos" class="bloco-entrada" style="display: none;">
+      <p>Coordenadas dos vértices (plano cartesiano):</p>
+      <div class="pontos-grid">
+        <div class="ponto-grupo">
+          <span>A</span>
+          <input type="number" id="pAx" placeholder="x" step="any" />
+          <input type="number" id="pAy" placeholder="y" step="any" />
+        </div>
+        <div class="ponto-grupo">
+          <span>B</span>
+          <input type="number" id="pBx" placeholder="x" step="any" />
+          <input type="number" id="pBy" placeholder="y" step="any" />
+        </div>
+        <div class="ponto-grupo">
+          <span>C</span>
+          <input type="number" id="pCx" placeholder="x" step="any" />
+          <input type="number" id="pCy" placeholder="y" step="any" />
+        </div>
+      </div>
+    </div>
 
-      resultado.textContent = "";
+    <button type="button" class="btn-primario" onclick="adicionarTriangulo()">Adicionar triângulo</button>
+    <p id="resultado" class="resultado-msg"></p>
+  </section>
 
-      if (isNaN(ladoA) || isNaN(ladoB) || isNaN(ladoC)) {
-        resultado.textContent = "Medidas inválidas — insira valores numéricos.";
-        return;
-      }
+  <section class="card lista-card">
+  <div class="lista-triangulos">
+    <p class="lista-titulo">Triângulos</p>
+    <ul id="lista-triangulos-ul"></ul>
+  </div>
+  </section>
 
-      if (ladoA <= 0 || ladoB <= 0 || ladoC <= 0) {
-        resultado.textContent = "Medidas inválidas — os lados devem ser positivos.";
-        return;
-      }
+  <section class="card canvas-card">
+  <div class="canvas-container">
+    <canvas id="plano" width="520" height="420"></canvas>
+  </div>
+  </section>
 
-      const existeTriangulo =
-        ladoA + ladoB > ladoC &&
-        ladoA + ladoC > ladoB &&
-        ladoB + ladoC > ladoA;
+  <section class="card painel-card">
+  <div id="painel-dados" class="painel-dados"></div>
+  </section>
+  </main>
+  </div>
 
-      if (!existeTriangulo) {
-        resultado.textContent = "Medidas inválidas — não formam triângulo.";
-        return;
-      }
-      let tipoEncontrado = "";
-
-      if (ladoA === ladoB && ladoB === ladoC) {
-        tipoEncontrado = "equilatero";
-      } else if (ladoA === ladoB || ladoA === ladoC || ladoB === ladoC) {
-        tipoEncontrado = "isosceles";
-      } else {
-        tipoEncontrado = "escaleno";
-      }
-
-      if (tipoSelecionado === tipoEncontrado) {
-        resultado.textContent = `Medidas válidas para triângulo ${tipoEncontrado}.`;
-      } else {
-        resultado.textContent = `Medidas inválidas para triângulo ${tipoSelecionado}.`;
-      }
-    }
-  </script>
+  <script src="arquivo.js"></script>
 </body>
 </html>
